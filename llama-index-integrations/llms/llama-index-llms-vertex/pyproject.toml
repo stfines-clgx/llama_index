@@ -21,17 +21,17 @@ ignore_missing_imports = true
 python_version = "3.8"
 
 [tool.poetry]
-authors = ["Your Name <you@example.com>"]
+authors = ["Logan Markewich <logan.markewich@live.com>"]
 description = "llama-index llms vertex integration"
 exclude = ["**/BUILD"]
 license = "MIT"
 name = "llama-index-llms-vertex"
 readme = "README.md"
-version = "0.3.7"
+version = "0.3.8+patch12"
 
 [tool.poetry.dependencies]
 python = ">=3.8.1,<4.0"
-google-cloud-aiplatform = "^1.39.0"
+google-cloud-aiplatform = "^1.70.0"
 pyarrow = "^15.0.2"
 llama-index-core = "^0.11.0"
 
