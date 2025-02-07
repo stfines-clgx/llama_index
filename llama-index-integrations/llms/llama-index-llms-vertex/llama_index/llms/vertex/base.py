@@ -30,7 +30,7 @@ from llama_index.core.llms.function_calling import FunctionCallingLLM, ToolSelec
 from llama_index.core.utilities.gemini_utils import merge_neighboring_same_role_messages
 
 from llama_index.llms.vertex.gemini_tool import GeminiToolWrapper
-from llama_index.llms.vertex.gemini_utils import create_gemini_client, is_gemini_model
+from llama_index.llms.vertex.gemini_utils import is_gemini_model
 from llama_index.llms.vertex.utils import (
     CHAT_MODELS,
     CODE_CHAT_MODELS,
@@ -126,7 +126,9 @@ class Vertex(FunctionCallingLLM):
         is_text: bool = False,
         is_code: bool = False,
     ) -> None:
-        init_vertexai(project=project, location=location, credentials=credentials)
+        self._client = init_vertexai(
+            project=project, location=location, credentials=credentials
+        )
 
         safety_settings = safety_settings or {}
         additional_kwargs = additional_kwargs or {}
@@ -185,7 +187,6 @@ class Vertex(FunctionCallingLLM):
 
             self._client = TextGenerationModel.from_pretrained(model)
         elif is_gemini_model(model):
-            self._client = create_gemini_client(model, self._safety_settings)
             self._chat_client = self._client
             self._is_gemini = True
             self._is_chat_model = True

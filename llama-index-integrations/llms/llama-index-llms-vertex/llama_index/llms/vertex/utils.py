@@ -1,12 +1,15 @@
 # utils script
+from google.genai.types import *
+
 import jsonref
 
 # generation with retry
 import logging
+from google import genai
+from google.genai import types
 from typing import Any, Callable, Optional
 
 import google.api_core
-import vertexai
 from tenacity import (
     before_sleep_log,
     retry,
@@ -157,7 +160,8 @@ def init_vertexai(
     project: Optional[str] = None,
     location: Optional[str] = None,
     credentials: Optional[Any] = None,
-) -> None:
+    safety_settings: Optional[list[types.SafetySetting]] = None,
+) -> genai.Client:
     """Init vertexai.
 
     Args:
@@ -170,10 +174,12 @@ def init_vertexai(
     Raises:
         ImportError: If importing vertexai SDK did not succeed.
     """
-    vertexai.init(
+    return genai.Client(
+        vertexai=True,
         project=project,
         location=location,
         credentials=credentials,
+        safety_settings=safety_settings,
     )
 
 
